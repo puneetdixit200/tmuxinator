@@ -38,9 +38,11 @@ describe Tmuxinator::Pane do
 
   describe "#tmux_main_command" do
     it "escapes array commands with Shellwords" do
-      expect(subject.tmux_main_command(["echo hello", "echo world"])).to eql(
-        "tmux send-keys -t foo:0.1 echo\\ hello echo\\ world C-m"
-      )
+      command = ["bundle exec rails console", "--sandbox"]
+      expected = "tmux send-keys -t foo:0.1 " \
+                 "bundle\\ exec\\ rails\\ console --sandbox C-m"
+
+      expect(subject.tmux_main_command(command)).to eql(expected)
     end
   end
 
